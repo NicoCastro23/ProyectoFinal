@@ -85,6 +85,34 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <!-- Dependencia para Jakarta Persistence (JPA) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version> <!-- Ajusta la versión según la que necesites -->
+        </dependency>
+
+        <!-- Dependencia para Jakarta Bean Validation (para @NotNull, @Size, etc.) -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.0</version>  <!-- or the appropriate version -->
+        </dependency>
+
+        <!-- Dependencia para el proveedor de implementación de Jakarta (Hibernate) -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.0.Final</version>  <!-- Ensure this version is compatible with your Spring Boot version -->
+        </dependency>
+        
+        <!-- Dependencia para el servidor de aplicaciones, por ejemplo, Tomcat -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>9.0.54</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -96,4 +124,3 @@
         </plugins>
     </build>
 </project>
-

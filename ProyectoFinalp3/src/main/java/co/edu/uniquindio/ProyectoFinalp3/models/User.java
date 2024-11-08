@@ -3,7 +3,6 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 import jakarta.persistence.*;
 import java.util.List;
 
-
 import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 
 @Entity
@@ -28,14 +27,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
+    // Inicializamos las listas para evitar NullPointerException
+    @OneToMany(mappedBy = "user1")
+    private List<Chat> chatsAsUser1; // Relación como user1
+
+    @OneToMany(mappedBy = "user2")
+    private List<Chat> chatsAsUser2; // Relación como user2
+
     @OneToMany(mappedBy = "user")
     private List<Product> products;
 
     @OneToMany(mappedBy = "user")
     private List<Contact> contacts;
-
-    @OneToMany(mappedBy = "user")
-    private List<Chat> chats;
 
     // Constructor vacío
     public User() {}
@@ -51,7 +54,7 @@ public class User {
         this.role = role;
     }
 
-    // Getter y Setter
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -82,10 +85,16 @@ public class User {
     public List<Contact> getContacts() { return contacts; }
     public void setContacts(List<Contact> contacts) { this.contacts = contacts; }
 
-    public List<Chat> getChats() { return chats; }
-    public void setChats(List<Chat> chats) { this.chats = chats; }
+    public List<Chat> getChatsAsUser1() { return chatsAsUser1; }
+    public void setChatsAsUser1(List<Chat> chatsAsUser1) { this.chatsAsUser1 = chatsAsUser1; }
+
+    public List<Chat> getChatsAsUser2() { return chatsAsUser2; }
+    public void setChatsAsUser2(List<Chat> chatsAsUser2) { this.chatsAsUser2 = chatsAsUser2; }
 
     public String getEmail() {
         return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

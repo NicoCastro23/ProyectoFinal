@@ -1,4 +1,3 @@
-// src/main/java/co/edu/uniquindio/ProyectoFinalp3/models/Order.java
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import jakarta.persistence.*;
@@ -12,6 +11,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String status;
 
     private String orderNumber;
     private BigDecimal totalAmount;
@@ -36,6 +37,14 @@ public class Order {
     // Getter y Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getOrderNumber() { return orderNumber; }
     public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }

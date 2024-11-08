@@ -1,4 +1,3 @@
-// src/main/java/co/edu/uniquindio/ProyectoFinalp3/models/OrderItem.java
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import jakarta.persistence.*;
@@ -44,4 +43,3 @@ public class OrderItem {
     public Order getOrder() { return order; }
     public void setOrder(Order order) { this.order = order; }
 }
-

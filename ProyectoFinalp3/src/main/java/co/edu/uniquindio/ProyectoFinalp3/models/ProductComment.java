@@ -1,4 +1,3 @@
-// src/main/java/co/edu/uniquindio/ProyectoFinalp3/models/ProductComment.java
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import jakarta.persistence.*;
@@ -44,4 +43,3 @@ public class ProductComment {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 }
-
