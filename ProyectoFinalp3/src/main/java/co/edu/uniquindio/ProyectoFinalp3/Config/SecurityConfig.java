@@ -2,7 +2,7 @@ package co.edu.uniquindio.ProyectoFinalp3.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.http.HttpMethod;
 // Importaciones de seguridad
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,18 +23,21 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/products/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
 
         return http.build();
-    }
+    } 
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+    
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
