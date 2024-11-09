@@ -3,6 +3,7 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 
@@ -11,8 +12,8 @@ import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String name;
     private String imageUrl;
@@ -46,8 +47,8 @@ public class Product {
     }
 
     // Getter y Setter
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

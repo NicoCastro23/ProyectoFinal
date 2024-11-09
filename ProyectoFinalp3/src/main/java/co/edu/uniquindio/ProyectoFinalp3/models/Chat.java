@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -7,8 +9,8 @@ import jakarta.persistence.*;
 public class Chat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String message;
 
@@ -31,8 +33,8 @@ public class Chat {
     }
 
     // Getter y Setter
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }

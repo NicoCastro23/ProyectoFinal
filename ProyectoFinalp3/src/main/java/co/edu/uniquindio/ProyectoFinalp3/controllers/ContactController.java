@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 import co.edu.uniquindio.ProyectoFinalp3.services.ContactService;
 
 @RestController
@@ -19,7 +20,7 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createContact(@RequestParam String userId, @RequestParam String name,
+    public ResponseEntity<String> createContact(@RequestParam UUID userId, @RequestParam String name,
             @RequestParam String phoneNumber) {
         try {
             contactService.createContactForUser(userId, name, phoneNumber);

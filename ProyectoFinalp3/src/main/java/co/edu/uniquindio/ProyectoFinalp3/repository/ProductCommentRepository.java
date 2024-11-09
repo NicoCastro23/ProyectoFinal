@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface ProductCommentRepository extends JpaRepository<ProductComment, String> {
+public interface ProductCommentRepository extends JpaRepository<ProductComment, UUID> {
 
     // Encuentra todos los comentarios de un producto específico
-    List<ProductComment> findByProductId(String productId);
+    List<ProductComment> findByProductId(UUID productId);
 
     // Encuentra todos los comentarios de un usuario específico
-    List<ProductComment> findByUserId(String userId);
+    List<ProductComment> findByUserId(UUID userId);
 }

@@ -31,9 +31,10 @@ public class UserService {
 
     // Crea un nuevo usuario
     public User createUser(User registerRequest) {
+
         // Codifica la contraseña antes de guardarla en la base de datos
         registerRequest.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        
+
         // Guarda el nuevo usuario en la base de datos
         return userRepository.save(registerRequest);
     }

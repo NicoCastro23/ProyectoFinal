@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface OrderItemRepository extends JpaRepository<OrderItem, String> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
 
     // Encuentra todos los elementos de una orden específica
-    List<OrderItem> findByOrderId(String orderId);
+    List<OrderItem> findByOrderId(UUID orderId);
 }

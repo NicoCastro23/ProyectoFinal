@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.services;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    public void createContactForUser(String userId, String name, String phoneNumber) {
+    public void createContactForUser(UUID userId, String name, String phoneNumber) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 

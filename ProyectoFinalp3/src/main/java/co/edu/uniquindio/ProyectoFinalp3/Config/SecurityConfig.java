@@ -18,29 +18,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // Deshabilitar CSRF
                 .csrf().disable()
                 .cors().and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**").permitAll()
+                .authorizeHttpRequests() // Cambié authorizeRequests() por authorizeHttpRequests()
+                .requestMatchers("/api/auth/**").permitAll() // Usar requestMatchers en lugar de antMatchers
                 .requestMatchers("/api/products/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
 
         return http.build();
-    } 
-
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-    
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -23,11 +24,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(String id) {
+    public Optional<Product> getProductById(UUID id) {
         return productRepository.findById(id);
     }
 
-    public Product updateProduct(String id, Product updatedProduct) {
+    public Product updateProduct(UUID id, Product updatedProduct) {
         if (productRepository.existsById(id)) {
             updatedProduct.setId(id);
             return productRepository.save(updatedProduct);
@@ -35,7 +36,7 @@ public class ProductService {
         return null;
     }
 
-    public boolean deleteProduct(String id) {
+    public boolean deleteProduct(UUID id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
             return true;
@@ -43,7 +44,7 @@ public class ProductService {
         return false;
     }
 
-    public List<Product> getProductsByUserId(String userId) {
+    public List<Product> getProductsByUserId(UUID userId) {
         return productRepository.findByUserId(userId);
     }
 

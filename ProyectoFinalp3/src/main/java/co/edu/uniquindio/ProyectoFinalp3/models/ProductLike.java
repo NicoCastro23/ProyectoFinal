@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -7,8 +9,8 @@ import jakarta.persistence.*;
 public class ProductLike {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -28,8 +30,8 @@ public class ProductLike {
     }
 
     // Getter y Setter
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }

@@ -3,6 +3,7 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 import co.edu.uniquindio.ProyectoFinalp3.enums.PaymentMethod;
 import co.edu.uniquindio.ProyectoFinalp3.enums.PaymentType;
@@ -12,8 +13,8 @@ import co.edu.uniquindio.ProyectoFinalp3.enums.PaymentType;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(name = "status") // Ensure the correct column name is here
     private String status;
@@ -51,11 +52,11 @@ public class Payment {
     }
 
     // Getter y Setter
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

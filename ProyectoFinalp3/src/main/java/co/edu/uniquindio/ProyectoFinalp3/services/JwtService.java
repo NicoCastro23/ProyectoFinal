@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -18,13 +19,13 @@ public class JwtService {
     private long expirationTime;
 
     // Genera el JWT
-    public String generateToken(String userId) {
+    public String generateToken(UUID userId) {
         // Usamos el algoritmo HMAC256 para firmar el token
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         // Generamos el token
         return JWT.create()
-                .withSubject(userId) // Se utiliza el correo o username como 'subject'
+                .withSubject(userId.toString()) // Se utiliza el correo o username como 'subject'
                 .withIssuedAt(new Date()) // Fecha de emisión
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime)) // Fecha de expiración
                 .sign(algorithm); // Firmamos el token con el secreto

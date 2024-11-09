@@ -5,14 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "contacts")
 public class Contact {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @NotNull
     @Size(min = 1, max = 100)
@@ -44,11 +45,11 @@ public class Contact {
     }
 
     // Getter y Setter
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
