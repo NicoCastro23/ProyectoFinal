@@ -27,20 +27,28 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody User loginRequest) {
         Map<String, Object> response = new HashMap<>();
-        User user = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
 
-        if (user != null) {
-            String token = jwtService.generateToken(user.getId());
-            response.put("ok", true);
-            response.put("token", token);
-            response.put("nombre", user.getUsername());
-            return ResponseEntity.ok(response);
+        try {
+            User user = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+
+            if (user != null) {
+                String token = jwtService.generateToken(user.getId());
+                response.put("ok", true);
+                response.put("token", token);
+                response.put("nombre", user.getUsername());
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("ok", false);
+                response.put("msg", "Credenciales inválidas");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+        } catch (Exception e) {
+            // Imprimir o registrar la excepción para entender qué está fallando
+            e.printStackTrace(); // Esto imprimirá el error en la consola
+            response.put("ok", false);
+            response.put("msg", "Error en el proceso de autenticación: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-
-        // Si el usuario no existe o las credenciales no son válidas
-        response.put("ok", false);
-        response.put("msg", "Credenciales inválidas");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     // Register: Registro de un nuevo usuario

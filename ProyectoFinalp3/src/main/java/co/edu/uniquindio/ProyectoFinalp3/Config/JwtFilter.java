@@ -27,6 +27,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        // No procesar las rutas públicas
+        String uri = request.getRequestURI();
+        if (uri.startsWith("/api/auth/")) {
+            filterChain.doFilter(request, response); // Continua la cadena de filtros sin hacer nada
+            return;
+        }
+
         String authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -72,7 +79,8 @@ public class JwtFilter extends OncePerRequestFilter {
         DecodedJWT decodedJWT = JWT.decode(token);
         String username = decodedJWT.getSubject(); // Extrae el nombre de usuario del token (si lo tienes)
 
-        // Si el token tiene roles u otros datos, puedes extraerlos aquí (dependiendo de cómo se generó el token)
+        // Si el token tiene roles u otros datos, puedes extraerlos aquí (dependiendo de
+        // cómo se generó el token)
 
         return new CustomAuthentication(username);
     }
