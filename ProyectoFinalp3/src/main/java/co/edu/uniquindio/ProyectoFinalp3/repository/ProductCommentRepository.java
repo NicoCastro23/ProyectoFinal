@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductCommentRepository extends JpaRepository<ProductComment, Long> {
+public interface ProductCommentRepository extends JpaRepository<ProductComment, String> {
 
     // Encuentra todos los comentarios de un producto específico
-    List<ProductComment> findByProductId(Long productId);
+    List<ProductComment> findByProductId(String productId);
 
     // Encuentra todos los comentarios de un usuario específico
-    List<ProductComment> findByUserId(Long userId);
+    List<ProductComment> findByUserId(String userId);
 }

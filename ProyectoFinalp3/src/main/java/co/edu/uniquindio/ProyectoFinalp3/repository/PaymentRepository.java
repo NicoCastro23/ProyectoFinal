@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, Long> {
+public interface PaymentRepository extends JpaRepository<Payment, String> {
 
     // Encuentra todos los pagos de un usuario específico
-    List<Payment> findByUserId(Long userId);
+    List<Payment> findByUserId(String userId);
 
     // Encuentra todos los pagos por estado
     List<Payment> findByStatus(String status);

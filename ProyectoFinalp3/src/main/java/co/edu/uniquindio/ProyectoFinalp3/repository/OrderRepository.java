@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, String> {
 
     // Encuentra todas las órdenes de un usuario específico
-    List<Order> findByUserId(Long userId);
+    List<Order> findByUserId(String userId);
 
     // Encuentra todas las órdenes por estado
     List<Order> findByStatus(String status);

@@ -23,11 +23,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id) {
+    public Optional<Product> getProductById(String id) {
         return productRepository.findById(id);
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
+    public Product updateProduct(String id, Product updatedProduct) {
         if (productRepository.existsById(id)) {
             updatedProduct.setId(id);
             return productRepository.save(updatedProduct);
@@ -35,7 +35,7 @@ public class ProductService {
         return null;
     }
 
-    public boolean deleteProduct(Long id) {
+    public boolean deleteProduct(String id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
             return true;
@@ -43,7 +43,7 @@ public class ProductService {
         return false;
     }
 
-    public List<Product> getProductsByUserId(Long userId) {
+    public List<Product> getProductsByUserId(String userId) {
         return productRepository.findByUserId(userId);
     }
 

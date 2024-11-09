@@ -34,27 +34,27 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductById(@PathVariable Long id) {
+    public ResponseEntity<?> getProductById(@PathVariable String id) {
         Optional<Product> product = productService.getProductById(id);
         return product.isPresent() ? ResponseEntity.ok(product.get()) 
                                    : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<?> updateProduct(@PathVariable String id, @RequestBody Product product) {
         Product updatedProduct = productService.updateProduct(id, product);
         return updatedProduct != null ? ResponseEntity.ok(updatedProduct)
                                       : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado o no se pudo actualizar");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
         return productService.deleteProduct(id) ? ResponseEntity.ok("Producto eliminado correctamente")
                                                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Product>> getProductsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Product>> getProductsByUserId(@PathVariable String userId) {
         return ResponseEntity.ok(productService.getProductsByUserId(userId));
     }
 

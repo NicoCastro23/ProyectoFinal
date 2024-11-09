@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, String> {
 
     // Encuentra todos los elementos de una orden específica
-    List<OrderItem> findByOrderId(Long orderId);
+    List<OrderItem> findByOrderId(String orderId);
 }

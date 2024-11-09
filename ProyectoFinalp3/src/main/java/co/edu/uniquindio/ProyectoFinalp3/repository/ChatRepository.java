@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChatRepository extends JpaRepository<Chat, Long> {
+public interface ChatRepository extends JpaRepository<Chat, String> {
 
     // Encuentra todos los chats en los que participa un usuario específico
     List<Chat> findByUser1OrUser2(User user1, User user2);
 
-    List<Chat> findByUser1_IdOrUser2_Id(Long userId1, Long userId2);
+    List<Chat> findByUser1_IdOrUser2_Id(String userId1, String userId2);
 
 }

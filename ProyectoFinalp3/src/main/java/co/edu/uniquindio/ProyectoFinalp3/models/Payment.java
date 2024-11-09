@@ -13,7 +13,7 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(name = "status") // Ensure the correct column name is here
     private String status;
@@ -51,11 +51,11 @@ public class Payment {
     }
 
     // Getter y Setter
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

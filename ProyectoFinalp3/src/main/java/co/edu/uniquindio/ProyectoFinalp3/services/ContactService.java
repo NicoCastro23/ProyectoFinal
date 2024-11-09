@@ -17,7 +17,7 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    public void createContactForUser(Long userId, String name, String phoneNumber) {
+    public void createContactForUser(String userId, String name, String phoneNumber) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 

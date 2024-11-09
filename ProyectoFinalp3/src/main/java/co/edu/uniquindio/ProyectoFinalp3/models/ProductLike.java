@@ -8,7 +8,7 @@ public class ProductLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -28,8 +28,8 @@ public class ProductLike {
     }
 
     // Getter y Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }

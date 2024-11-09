@@ -18,13 +18,13 @@ public class JwtService {
     private long expirationTime;
 
     // Genera el JWT
-    public String generateToken(String username) {
+    public String generateToken(String userId) {
         // Usamos el algoritmo HMAC256 para firmar el token
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         // Generamos el token
         return JWT.create()
-                .withSubject(username) // Se utiliza el correo o username como 'subject'
+                .withSubject(userId) // Se utiliza el correo o username como 'subject'
                 .withIssuedAt(new Date()) // Fecha de emisión
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime)) // Fecha de expiración
                 .sign(algorithm); // Firmamos el token con el secreto

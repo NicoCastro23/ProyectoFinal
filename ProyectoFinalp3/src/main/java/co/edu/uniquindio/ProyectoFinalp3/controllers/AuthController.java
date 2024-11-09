@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ProyectoFinalp3.controllers;
 
+import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.services.JwtService;
 import co.edu.uniquindio.ProyectoFinalp3.services.UserService;
@@ -29,10 +30,10 @@ public class AuthController {
         User user = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
 
         if (user != null) {
-            String token = jwtService.generateToken(user.getEmail());
+            String token = jwtService.generateToken(user.getId());
             response.put("ok", true);
             response.put("token", token);
-            response.put("nombre", user.getUsername()); 
+            response.put("nombre", user.getUsername());
             return ResponseEntity.ok(response);
         }
 
@@ -42,6 +43,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    // Register: Registro de un nuevo usuario
     // Register: Registro de un nuevo usuario
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody User registerRequest) {
@@ -68,16 +70,22 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
+        // Establecer el rol del nuevo usuario
+        registerRequest.setRole(RoleEnum.USER);
+
         // Crea el usuario (asegúrate de que la contraseña esté codificada)
         User newUser = userService.createUser(registerRequest);
 
         // Genera el JWT para el nuevo usuario
-        String token = jwtService.generateToken(newUser.getEmail());
+        String token = jwtService.generateToken(newUser.getId());
 
         // Respuesta exitosa
         response.put("ok", true);
         response.put("msg", "Usuario registrado exitosamente");
         response.put("token", token);
+
+        // Asegúrate de que el return esté al final del método sin ningún error de
+        // sintaxis
         return ResponseEntity.ok(response);
     }
 

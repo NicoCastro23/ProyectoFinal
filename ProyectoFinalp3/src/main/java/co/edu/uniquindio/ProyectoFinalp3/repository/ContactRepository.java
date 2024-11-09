@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ContactRepository extends JpaRepository<Contact, Long> {
+public interface ContactRepository extends JpaRepository<Contact, String> {
 
     // Encuentra todos los contactos de un usuario
-    List<Contact> findByUserId(Long userId);
+    List<Contact> findByUserId(String userId);
 
     @Query("SELECT c FROM Contact c WHERE c.user.id = :userId AND c.contactUser.id = :contactUserId")
-    Optional<Contact> findByUserIdAndContactUserId(@Param("userId") Long userId,
-            @Param("contactUserId") Long contactUserId);
+    Optional<Contact> findByUserIdAndContactUserId(@Param("userId") String userId,
+            @Param("contactUserId") String contactUserId);
 
 }
