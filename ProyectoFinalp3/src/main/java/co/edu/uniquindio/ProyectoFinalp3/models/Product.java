@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 
 @Entity
@@ -24,6 +26,7 @@ public class Product {
     private ProductStatus status;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 

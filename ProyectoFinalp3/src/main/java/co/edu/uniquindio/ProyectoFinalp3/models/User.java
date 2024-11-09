@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 
 @Entity
@@ -35,9 +37,11 @@ public class User {
     @OneToMany(mappedBy = "user2")
     private List<Chat> chatsAsUser2; // Relación como user2
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Product> products;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Contact> contacts;
 
