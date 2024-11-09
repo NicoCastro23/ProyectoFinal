@@ -8,25 +8,32 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(); // Instancia del filtro JWT
+    }
+    
     @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Deshabilitar CSRF
-                .csrf().disable()
+                .csrf().disable() // Deshabilita CSRF si no lo necesitas
                 .cors().and()
-                .authorizeHttpRequests() // Cambié authorizeRequests() por authorizeHttpRequests()
-                .requestMatchers("/api/auth/**").permitAll() // Usar requestMatchers en lugar de antMatchers
-                .requestMatchers("/api/products/**").permitAll()
-                .anyRequest().authenticated()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/auth/**").permitAll() // Rutas de autenticación abiertas
+                .requestMatchers("/api/**").authenticated() // Solo autenticados pueden crear productos
+                // .requestMatchers("/api/products/**").permitAll() // Otras rutas de productos son públicas
+                .anyRequest().authenticated() // Cualquier otra ruta debe ser autenticada
                 .and()
-                .httpBasic();
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class); // Asegura que tu filtro JWT
+                                                                                         // esté en la cadena de filtros
 
         return http.build();
     }
