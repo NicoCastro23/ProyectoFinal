@@ -1,15 +1,11 @@
 package co.edu.uniquindio.ProyectoFinalp3.controllers;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import co.edu.uniquindio.ProyectoFinalp3.models.Contact;
 import co.edu.uniquindio.ProyectoFinalp3.services.ContactService;
 
 @RestController
@@ -19,15 +15,26 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createContact(@RequestParam UUID userId, @RequestParam String name,
-            @RequestParam String phoneNumber) {
-        try {
-            contactService.createContactForUser(userId, name, phoneNumber);
-            return ResponseEntity.ok("Contact created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating contact: " + e.getMessage());
-        }
+    // Endpoint para añadir un contacto usando los usernames
+    @PostMapping
+    public ResponseEntity<Contact> addContact(@RequestParam String userUsername, @RequestParam String contactUsername) {
+        Contact contact = contactService.addContact(userUsername, contactUsername);
+        return ResponseEntity.ok(contact);
+    }
 
+    // Endpoint para obtener la lista de contactos de un usuario específico usando su username
+    @GetMapping("/{userUsername}")
+    public ResponseEntity<List<Contact>> getContacts(@PathVariable String userUsername) {
+        List<Contact> contacts = contactService.getContacts(userUsername);
+        return ResponseEntity.ok(contacts);
+    }
+
+    // Endpoint para eliminar un contacto usando los usernames
+    @DeleteMapping("/{userUsername}/{contactUsername}")
+    public ResponseEntity<Void> removeContact(@PathVariable String userUsername, @PathVariable String contactUsername) {
+        contactService.removeContact(userUsername, contactUsername);
+        return ResponseEntity.noContent().build();
     }
 }
+
+

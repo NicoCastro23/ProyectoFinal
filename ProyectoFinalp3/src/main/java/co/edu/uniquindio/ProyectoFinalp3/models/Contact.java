@@ -1,9 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Pattern;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,58 +13,27 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    private String name;
-
-    @NotNull
-    @Size(min = 10, max = 15) // Adjust size based on your phone number length requirements
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Invalid phone number format") // A simple pattern for phone
-                                                                                     // number
-    private String phoneNumber;
-
-    @ManyToOne(cascade = CascadeType.ALL) // Optional: Add cascade if you want automatic cascading operations
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // Usuario propietario de este contacto
 
     @ManyToOne
-    @JoinColumn(name = "contact_user_id")
-    private User contactUser;
+    @JoinColumn(name = "contact_user_id", nullable = false)
+    private User contactUser; // Usuario añadido como contacto
 
     // Constructor vacío
     public Contact() {
     }
 
     // Constructor con parámetros
-    public Contact(String name, String phoneNumber, User user) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+    public Contact(User user, User contactUser) {
         this.user = user;
+        this.contactUser = contactUser;
     }
 
-    // Getter y Setter
+    // Getters y Setters
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public User getUser() {
@@ -77,9 +44,17 @@ public class Contact {
         this.user = user;
     }
 
+    public User getContactUser() {
+        return contactUser;
+    }
+
+    public void setContactUser(User contactUser) {
+        this.contactUser = contactUser;
+    }
+
     @Override
     public String toString() {
-        return "Contact{id=" + id + ", name='" + name + "', phoneNumber='" + phoneNumber + "'}";
+        return "Contact{id=" + id + ", user=" + user.getUsername() + ", contactUser=" + contactUser.getUsername() + "}";
     }
 
     @Override

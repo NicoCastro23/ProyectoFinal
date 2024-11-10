@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.auth0.jwt.JWT;
@@ -18,6 +19,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import co.edu.uniquindio.ProyectoFinalp3.security.CustomAuthentication;
 
 import java.io.IOException;
+@Component
 
 public class JwtFilter extends OncePerRequestFilter {
 

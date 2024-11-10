@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll() // Rutas de autenticación abiertas
+                .requestMatchers("/contacts/**").permitAll() 
                 .requestMatchers("/api/**").authenticated() // Solo autenticados pueden crear productos
                 // .requestMatchers("/api/products/**").permitAll() // Otras rutas de productos son públicas
                 .anyRequest().authenticated() // Cualquier otra ruta debe ser autenticada
