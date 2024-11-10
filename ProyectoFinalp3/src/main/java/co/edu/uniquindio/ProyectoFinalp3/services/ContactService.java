@@ -67,4 +67,10 @@ public class ContactService {
 
         contactRepository.delete(contact);
     }
+    // Método para obtener sugerencias de contactos basadas en amigos mutuos
+    public List<User> getSuggestedContacts(String userUsername) {
+    User user = userRepository.findByUsername(userUsername)
+            .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
+    return contactRepository.findSuggestedContactsByMutualFriends(user);
+}
 }

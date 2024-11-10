@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import co.edu.uniquindio.ProyectoFinalp3.models.Contact;
+import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.services.ContactService;
 
 @RestController
@@ -35,6 +36,12 @@ public class ContactController {
         contactService.removeContact(userUsername, contactUsername);
         return ResponseEntity.noContent().build();
     }
+    // Endpoint para obtener sugerencias de contactos de un usuario
+    @GetMapping("/suggestions/{userUsername}")
+    public ResponseEntity<List<User>> getSuggestedContacts(@PathVariable String userUsername) {
+    List<User> suggestedContacts = contactService.getSuggestedContacts(userUsername);
+    return ResponseEntity.ok(suggestedContacts);
+}
 }
 
 
