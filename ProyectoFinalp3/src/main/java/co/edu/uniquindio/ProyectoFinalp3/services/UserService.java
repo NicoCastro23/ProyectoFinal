@@ -2,6 +2,9 @@ package co.edu.uniquindio.ProyectoFinalp3.services;
 
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,5 +40,9 @@ public class UserService {
 
         // Guarda el nuevo usuario en la base de datos
         return userRepository.save(registerRequest);
+    }
+    // Método para buscar usuarios por su username (o parte del mismo)
+    public List<User> searchUsersByUsername(String username) {
+        return userRepository.findByUsernameContainingIgnoreCase(username);
     }
 }

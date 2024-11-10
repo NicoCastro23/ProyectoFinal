@@ -2,6 +2,7 @@ package co.edu.uniquindio.ProyectoFinalp3.repository;
 
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,5 +19,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByEmail(String email);
     // Método para buscar un usuario por su username
     Optional<User> findByUsername(String username);
+    // Método para buscar usuarios por parte del nombre de usuario
+    List<User> findByUsernameContainingIgnoreCase(String username);
 
 }
