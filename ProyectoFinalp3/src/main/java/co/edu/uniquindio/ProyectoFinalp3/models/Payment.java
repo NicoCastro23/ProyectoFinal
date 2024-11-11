@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import co.edu.uniquindio.ProyectoFinalp3.enums.PaymentMethod;
 import co.edu.uniquindio.ProyectoFinalp3.enums.PaymentType;
 
@@ -31,7 +33,7 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id") // Relación con el modelo User
     private User user;

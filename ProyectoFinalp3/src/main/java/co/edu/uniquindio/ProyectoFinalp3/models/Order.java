@@ -2,8 +2,11 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "orders")
@@ -17,13 +20,13 @@ public class Order {
 
     private String orderNumber;
     private BigDecimal totalAmount;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
+    @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>(); // Inicializa la lista para evitar NullPointerException
 
     // Constructor vacío
     public Order() {}
@@ -33,19 +36,15 @@ public class Order {
         this.orderNumber = orderNumber;
         this.totalAmount = totalAmount;
         this.user = user;
+        this.orderItems = new ArrayList<>(); // Inicializa la lista en el constructor
     }
 
-    // Getter y Setter
+    // Getters y Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
     public String getOrderNumber() { return orderNumber; }
     public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }

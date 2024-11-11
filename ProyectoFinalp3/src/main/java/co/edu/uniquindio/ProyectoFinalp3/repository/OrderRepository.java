@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.repository;
 
 import co.edu.uniquindio.ProyectoFinalp3.models.Order;
+import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +12,8 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
     // Encuentra todas las órdenes de un usuario específico
-    List<Order> findByUserId(UUID userId);
+    List<Order> findByUser(User user);
 
-    // Encuentra todas las órdenes por estado
-    List<Order> findByStatus(String status);
+    // Método adicional si necesitas buscar órdenes por estado
+    List<Order> findByUserAndStatus(User user, String status);
 }

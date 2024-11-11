@@ -1,8 +1,8 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
-import java.util.UUID;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "order_items")
@@ -18,6 +18,7 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -25,14 +26,13 @@ public class OrderItem {
     // Constructor vacío
     public OrderItem() {}
 
-    // Constructor con parámetros
-    public OrderItem(int quantity, Product product, Order order) {
+    // Constructor con parámetros, sin incluir la orden
+    public OrderItem(int quantity, Product product) {
         this.quantity = quantity;
         this.product = product;
-        this.order = order;
     }
 
-    // Getter y Setter
+    // Getters y Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
