@@ -4,6 +4,8 @@ import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,5 +46,9 @@ public class UserService {
     // Método para buscar usuarios por su username (o parte del mismo)
     public List<User> searchUsersByUsername(String username) {
         return userRepository.findByUsernameContainingIgnoreCase(username);
+    }
+     // Nuevo método para buscar usuario por ID
+    public Optional<User> getUserById(UUID id) {
+        return userRepository.findById(id);
     }
 }
