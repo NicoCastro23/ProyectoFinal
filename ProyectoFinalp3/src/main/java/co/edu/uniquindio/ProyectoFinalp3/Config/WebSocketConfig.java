@@ -12,12 +12,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic"); // Rutas donde se enviarán los mensajes
-        config.setApplicationDestinationPrefixes("/app"); // Prefijo para enviar mensajes desde cliente
+        config.enableSimpleBroker("/topic");
+        config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat-websocket").setAllowedOrigins("*").withSockJS(); // Endpoint WebSocket
+        registry.addEndpoint("/chat-websocket").setAllowedOrigins("*").withSockJS();
     }
 }
+

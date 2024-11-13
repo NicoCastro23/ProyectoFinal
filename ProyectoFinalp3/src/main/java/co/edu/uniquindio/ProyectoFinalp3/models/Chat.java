@@ -2,10 +2,13 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "chats")
+@JsonIgnoreProperties({"user1", "user2"})
 public class Chat {
 
     @Id
