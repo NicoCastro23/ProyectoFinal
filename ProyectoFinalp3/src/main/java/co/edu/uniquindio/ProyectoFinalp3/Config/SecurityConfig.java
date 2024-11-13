@@ -19,7 +19,7 @@ public class SecurityConfig {
     public JwtFilter jwtFilter() {
         return new JwtFilter(); // Instancia del filtro JWT
     }
-    
+
     @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,13 +31,15 @@ public class SecurityConfig {
                 .requestMatchers("/orders/**").permitAll()
                 .requestMatchers("/contacts/**").permitAll()
                 .requestMatchers("/payments/**").permitAll()
-                .requestMatchers("/users/**").permitAll() 
+                .requestMatchers("/users/**").permitAll()
                 .requestMatchers("/api/**").authenticated() // Solo autenticados pueden crear productos
-                // .requestMatchers("/api/products/**").permitAll() // Otras rutas de productos son públicas
+                // .requestMatchers("/api/products/**").permitAll() // Otras rutas de productos
+                // son públicas
                 .anyRequest().authenticated() // Cualquier otra ruta debe ser autenticada
                 .and()
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class); // Asegura que tu filtro JWT
-                                                                                         // esté en la cadena de filtros
+                                                                                           // esté en la cadena de
+                                                                                           // filtros
 
         return http.build();
     }
@@ -51,5 +53,4 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
