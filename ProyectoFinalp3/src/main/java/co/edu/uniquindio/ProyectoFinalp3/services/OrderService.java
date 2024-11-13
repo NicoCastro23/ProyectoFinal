@@ -66,11 +66,20 @@ public class OrderService {
         return orderRepository.findById(orderId);
     }
 
+    @Transactional
     public Order updateOrderStatus(UUID orderId, String status) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found: " + orderId));
-        order.setStatus(status);
-        return orderRepository.save(order);
+
+        if ("CANCELED".equalsIgnoreCase(status)) {
+            // Elimina la orden si el estado es "CANCELED"
+            orderRepository.delete(order);
+            return null; // o lanza una excepción si prefieres manejar el caso en el controlador
+        } else {
+            // Si no está cancelada, solo actualiza el estado
+            order.setStatus(status);
+            return orderRepository.save(order);
+        }
     }
 
     public List<Order> getOrdersByUsername(String username) {

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "contacts")
 public class Contact {
@@ -12,7 +14,7 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user; // Usuario propietario de este contacto

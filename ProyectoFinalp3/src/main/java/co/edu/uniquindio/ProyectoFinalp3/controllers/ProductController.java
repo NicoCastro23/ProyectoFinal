@@ -20,9 +20,9 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+    public ResponseEntity<?> createProduct(@RequestBody Product product, @RequestParam String username) {
         try {
-            Product createdProduct = productService.createProduct(product);
+            Product createdProduct = productService.createProduct(product, username);
             return ResponseEntity.ok(createdProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear el producto: " + e.getMessage());
@@ -54,9 +54,9 @@ public class ProductController {
                                                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Product>> getProductsByUserId(@PathVariable UUID userId) {
-        return ResponseEntity.ok(productService.getProductsByUserId(userId));
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Product>> getProductsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(productService.getProductsByUsername(username));
     }
 
     @GetMapping("/category/{category}")

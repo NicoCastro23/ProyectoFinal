@@ -2,6 +2,8 @@ package co.edu.uniquindio.ProyectoFinalp3.services;
 
 import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 import co.edu.uniquindio.ProyectoFinalp3.models.Product;
+import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
+import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,13 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product createProduct(Product product) {
+    @Autowired
+    private UserRepository userRepository;  // Asegúrate de que esta línea esté aquí
+    public Product createProduct(Product product, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + username));
+
+        product.setUser(user);  // Asociar el usuario al producto
         return productRepository.save(product);
     }
 
@@ -44,10 +52,9 @@ public class ProductService {
         return false;
     }
 
-    public List<Product> getProductsByUserId(UUID userId) {
-        return productRepository.findByUserId(userId);
+    public List<Product> getProductsByUsername(String username) {
+        return productRepository.findByUser_Username(username);
     }
-
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
