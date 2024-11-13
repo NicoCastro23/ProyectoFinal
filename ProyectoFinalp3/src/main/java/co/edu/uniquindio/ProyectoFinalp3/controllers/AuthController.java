@@ -36,7 +36,7 @@ public class AuthController {
                 response.put("ok", true);
                 response.put("token", token);
                 response.put("nombre", user.getUsername());
-                response.put("userRole", user.getRole());
+                response.put("role", user.getRole());
                 return ResponseEntity.ok(response);
             } else {
                 response.put("ok", false);
@@ -92,7 +92,7 @@ public class AuthController {
         response.put("ok", true);
         response.put("msg", "Usuario registrado exitosamente");
         response.put("token", token);
-        response.put("userRole", "USER");
+        response.put("role", "USER");
 
         // Asegúrate de que el return esté al final del método sin ningún error de
         // sintaxis
