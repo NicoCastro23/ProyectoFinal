@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ProyectoFinalp3.services;
 
+import co.edu.uniquindio.ProyectoFinalp3.dto.UpdateUserRequest;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
 
@@ -50,5 +51,26 @@ public class UserService {
      // Nuevo método para buscar usuario por ID
     public Optional<User> getUserById(UUID id) {
         return userRepository.findById(id);
+    }
+
+   
+
+    // Actualiza la información del usuario autenticado
+    public boolean updateUserInfo(UUID userId, User updatedUserInfo) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            // Solo actualizamos los campos permitidos
+            user.setFirstName(updatedUserInfo.getFirstName());
+            user.setLastName(updatedUserInfo.getLastName());
+            user.setAddress(updatedUserInfo.getAddress());
+            user.setCedula(updatedUserInfo.getCedula());
+
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 }

@@ -56,4 +56,10 @@ public class JwtService {
                 .build()
                 .verify(token); // Verifica y decodifica el token
     }
+    // Extrae el userId del JWT
+    public UUID extractUserId(String token) {
+    DecodedJWT decodedJWT = decodeToken(token);
+    String userIdString = decodedJWT.getSubject(); // Asume que el userId está en el subject
+    return UUID.fromString(userIdString); // Convierte el subject a UUID
+}
 }
