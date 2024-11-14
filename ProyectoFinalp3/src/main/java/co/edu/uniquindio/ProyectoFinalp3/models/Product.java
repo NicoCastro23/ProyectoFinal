@@ -39,6 +39,10 @@ public class Product {
 
     // Constructor vacío
     public Product() {}
+    
+    public Product(UUID id) {
+        this.id = id;
+    }
 
     // Constructor con parámetros
     public Product(String name, String imageUrl, String category, BigDecimal price, ProductStatus status, User user) {

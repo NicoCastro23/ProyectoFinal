@@ -10,9 +10,9 @@ import java.util.UUID;
 @Repository
 public interface ProductCommentRepository extends JpaRepository<ProductComment, UUID> {
 
-    // Encuentra todos los comentarios de un producto específico
+    // Obtener todos los comentarios de un producto específico
     List<ProductComment> findByProductId(UUID productId);
 
-    // Encuentra todos los comentarios de un usuario específico
+    // Obtener todos los comentarios realizados por un usuario específico
     List<ProductComment> findByUserId(UUID userId);
 }

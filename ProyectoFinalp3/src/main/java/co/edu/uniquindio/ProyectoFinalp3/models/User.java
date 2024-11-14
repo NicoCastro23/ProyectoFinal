@@ -48,6 +48,10 @@ public class User {
     // Constructor vacío
     public User() {}
 
+    public User(UUID id) {
+        this.id = id;
+    }
+
     // Constructor con parámetros
     public User(String username, String password, String firstName, String lastName, String cedula, String address, RoleEnum role) {
         this.username = username;

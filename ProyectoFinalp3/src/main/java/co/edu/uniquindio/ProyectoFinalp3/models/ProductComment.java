@@ -1,19 +1,18 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import java.util.UUID;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product_comments")
 public class ProductComment {
-
+   
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String commentText;
-
+    
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
