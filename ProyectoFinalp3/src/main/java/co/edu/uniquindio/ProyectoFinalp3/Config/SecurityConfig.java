@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .requestMatchers("/orders/**").permitAll()
                 .requestMatchers("/contacts/**").permitAll()
                 .requestMatchers("/payments/**").permitAll()
+                .requestMatchers("/ws/chat").permitAll() 
+                .requestMatchers("/ws/**").permitAll() 
                 .requestMatchers("/users/**").permitAll()
                 .requestMatchers("/api/**").authenticated() // Solo autenticados pueden crear productos
                 // .requestMatchers("/api/products/**").permitAll() // Otras rutas de productos

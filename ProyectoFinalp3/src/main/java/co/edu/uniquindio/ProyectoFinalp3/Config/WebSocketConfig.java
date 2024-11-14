@@ -1,26 +1,26 @@
 package co.edu.uniquindio.ProyectoFinalp3.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+
+import co.edu.uniquindio.ProyectoFinalp3.websocket.ChatWebSocketHandler;
 
 @Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Registro de un endpoint de WebSocket
-        registry.addEndpoint("/chat")
-                .setAllowedOrigins("*") // Permite conexiones desde cualquier origen
-                .withSockJS(); // Este es el endpoint que los clientes usarán para conectarse
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(chatHandler(), "/ws/chat")
+                .setAllowedOrigins("*") // Ajusta según tus necesidades de CORS
+                .addInterceptors(new HttpSessionHandshakeInterceptor());
     }
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic"); // Se crea un broker para "/topic" que es donde los mensajes se envían
-        registry.setApplicationDestinationPrefixes("/app"); // El prefijo para los mensajes enviados desde el cliente
+    public WebSocketHandler chatHandler() {
+        return new ChatWebSocketHandler(); // Asegúrate de tener un handler para manejar los mensajes WebSocket
     }
 }
