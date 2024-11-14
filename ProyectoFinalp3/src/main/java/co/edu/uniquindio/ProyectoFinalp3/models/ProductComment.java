@@ -1,6 +1,9 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +18,7 @@ public class ProductComment {
     
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product product;
 
     @ManyToOne

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 
@@ -32,9 +33,11 @@ public class Product {
     private User user;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     private List<ProductComment> comments;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     private List<ProductLike> likes;
 
     // Constructor vacío

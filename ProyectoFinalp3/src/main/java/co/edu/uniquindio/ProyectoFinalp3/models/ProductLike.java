@@ -2,6 +2,9 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -14,9 +17,11 @@ public class ProductLike {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product product;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
