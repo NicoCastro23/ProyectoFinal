@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .requestMatchers("/orders/**").permitAll()
                 .requestMatchers("/contacts/**").permitAll()
                 .requestMatchers("/payments/**").permitAll()
+                .requestMatchers("/ws/chat").permitAll() 
+                .requestMatchers("/ws/**").permitAll() 
                 .requestMatchers("/users/**").permitAll()
                 .requestMatchers("/api/users/**").authenticated()
                 .requestMatchers("/api/users/{userId}/update").authenticated()
