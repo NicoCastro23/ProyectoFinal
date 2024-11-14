@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinalp3.services;
 
 import co.edu.uniquindio.ProyectoFinalp3.dto.UpdateUserRequest;
+import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
 
@@ -33,6 +34,10 @@ public class UserService {
     // Verifica si un correo electrónico ya existe en la base de datos
     public boolean emailExists(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public List<User> findAll(RoleEnum role) {
+        return userRepository.findByRole(role);
     }
 
     // Crea un nuevo usuario
