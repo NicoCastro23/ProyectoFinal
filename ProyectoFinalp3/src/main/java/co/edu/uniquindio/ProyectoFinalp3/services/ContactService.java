@@ -1,17 +1,16 @@
 package co.edu.uniquindio.ProyectoFinalp3.services;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import co.edu.uniquindio.ProyectoFinalp3.models.Contact;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.ContactRepository;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContactService {
@@ -22,18 +21,18 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    // Método para añadir un usuario a la lista de contactos de otro usuario usando el username
+    // Método para añadir un usuario a la lista de contactos de otro usuario usando UUID
     @Transactional
-    public Contact addContact(String userUsername, String contactUsername) {
-        if (userUsername.equals(contactUsername)) {
+    public Contact addContact(UUID userId, UUID contactUserId) {
+        if (userId.equals(contactUserId)) {
             throw new IllegalArgumentException("A user cannot add themselves as a contact.");
         }
 
-        User user = userRepository.findByUsername(userUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        User contactUser = userRepository.findByUsername(contactUsername)
-                .orElseThrow(() -> new IllegalArgumentException("Contact user not found: " + contactUsername));
+        User contactUser = userRepository.findById(contactUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Contact user not found: " + contactUserId));
 
         // Verifica si la relación ya existe
         Optional<Contact> existingContact = contactRepository.findByUserAndContactUser(user, contactUser);
@@ -46,39 +45,32 @@ public class ContactService {
         return contactRepository.save(contact);
     }
 
-    // Método para listar contactos de un usuario usando el username
-    public List<Contact> getContacts(String userUsername) {
-        User user = userRepository.findByUsername(userUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
-
+    // Método para listar contactos de un usuario usando UUID
+    public List<Contact> getContacts(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
         return contactRepository.findByUser(user);
     }
 
-    public List<Contact> getContactsByUserId(UUID userId) {
-        
-    
-        // Ejemplo con JPA:
-        return contactRepository.findByUserId(userId);
-    }
-
-    // Método para eliminar un contacto usando los usernames
+    // Método para eliminar un contacto usando UUID
     @Transactional
-    public void removeContact(String userUsername, String contactUsername) {
-        User user = userRepository.findByUsername(userUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
+    public void removeContact(UUID userId, UUID contactUserId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        User contactUser = userRepository.findByUsername(contactUsername)
-                .orElseThrow(() -> new IllegalArgumentException("Contact user not found: " + contactUsername));
+        User contactUser = userRepository.findById(contactUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Contact user not found: " + contactUserId));
 
         Contact contact = contactRepository.findByUserAndContactUser(user, contactUser)
                 .orElseThrow(() -> new IllegalArgumentException("Contact not found."));
 
         contactRepository.delete(contact);
     }
+
     // Método para obtener sugerencias de contactos basadas en amigos mutuos
-    public List<User> getSuggestedContacts(String userUsername) {
-    User user = userRepository.findByUsername(userUsername)
-            .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
-    return contactRepository.findSuggestedContactsByMutualFriends(user);
-}
+    public List<User> getSuggestedContacts(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
+        return contactRepository.findSuggestedContactsByMutualFriends(user);
+    }
 }
