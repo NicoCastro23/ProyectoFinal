@@ -17,6 +17,8 @@ public interface ContactRepository extends JpaRepository<Contact, UUID> {
     // Encuentra todos los contactos de un usuario específico
     List<Contact> findByUser(User user);
 
+    List<Contact> findByUserId(UUID userId);
+
     // Encuentra si ya existe una relación de contacto entre dos usuarios
     Optional<Contact> findByUserAndContactUser(User user, User contactUser);
 

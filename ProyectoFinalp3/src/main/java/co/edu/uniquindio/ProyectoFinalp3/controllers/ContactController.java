@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+
 import co.edu.uniquindio.ProyectoFinalp3.models.Contact;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.services.ContactService;
@@ -23,10 +25,23 @@ public class ContactController {
         return ResponseEntity.ok(contact);
     }
 
-    // Endpoint para obtener la lista de contactos de un usuario específico usando su username
-    @GetMapping("/{userUsername}")
-    public ResponseEntity<List<Contact>> getContacts(@PathVariable String userUsername) {
-        List<Contact> contacts = contactService.getContacts(userUsername);
+    // Endpoint para obtener la lista de contactos de un usuario específico usando
+    // su username
+    /*
+     * 
+     * @GetMapping("/{userUsername}")
+     * public ResponseEntity<List<Contact>> getContacts(@PathVariable String
+     * userUsername) {
+     * List<Contact> contacts = contactService.getContacts(userUsername);
+     * return ResponseEntity.ok(contacts);
+     * }
+     */
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Contact>> getContacts(@PathVariable UUID userId) {
+        // Usar userId como String si es un token JWT
+        List<Contact> contacts = contactService.getContactsByUserId(userId);
+
         return ResponseEntity.ok(contacts);
     }
 
@@ -36,12 +51,11 @@ public class ContactController {
         contactService.removeContact(userUsername, contactUsername);
         return ResponseEntity.noContent().build();
     }
+
     // Endpoint para obtener sugerencias de contactos de un usuario
     @GetMapping("/suggestions/{userUsername}")
     public ResponseEntity<List<User>> getSuggestedContacts(@PathVariable String userUsername) {
-    List<User> suggestedContacts = contactService.getSuggestedContacts(userUsername);
-    return ResponseEntity.ok(suggestedContacts);
+        List<User> suggestedContacts = contactService.getSuggestedContacts(userUsername);
+        return ResponseEntity.ok(suggestedContacts);
+    }
 }
-}
-
-

@@ -2,6 +2,7 @@ package co.edu.uniquindio.ProyectoFinalp3.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,13 @@ public class ContactService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userUsername));
 
         return contactRepository.findByUser(user);
+    }
+
+    public List<Contact> getContactsByUserId(UUID userId) {
+        
+    
+        // Ejemplo con JPA:
+        return contactRepository.findByUserId(userId);
     }
 
     // Método para eliminar un contacto usando los usernames
