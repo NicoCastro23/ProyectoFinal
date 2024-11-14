@@ -30,12 +30,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    // Inicializamos las listas para evitar NullPointerException
-    @OneToMany(mappedBy = "user1")
-    private List<Chat> chatsAsUser1; // Relación como user1
-
-    @OneToMany(mappedBy = "user2")
-    private List<Chat> chatsAsUser2; // Relación como user2
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<ChatParticipant> chatParticipants;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -90,11 +87,8 @@ public class User {
     public List<Contact> getContacts() { return contacts; }
     public void setContacts(List<Contact> contacts) { this.contacts = contacts; }
 
-    public List<Chat> getChatsAsUser1() { return chatsAsUser1; }
-    public void setChatsAsUser1(List<Chat> chatsAsUser1) { this.chatsAsUser1 = chatsAsUser1; }
-
-    public List<Chat> getChatsAsUser2() { return chatsAsUser2; }
-    public void setChatsAsUser2(List<Chat> chatsAsUser2) { this.chatsAsUser2 = chatsAsUser2; }
+    public List<ChatParticipant> getChatParticipants() { return chatParticipants; }
+    public void setChatParticipants(List<ChatParticipant> chatParticipants) { this.chatParticipants = chatParticipants; }
 
     public String getEmail() {
         return email;

@@ -1,50 +1,59 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
+import java.util.List;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "chats")
-@JsonIgnoreProperties({"user1", "user2"})
 public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String message;
+    private String name; // Nombre del chat (opcional, útil para chats grupales)
 
-    @ManyToOne
-    @JoinColumn(name = "user1_id", nullable = false)
-    private User user1; // Primer usuario en el chat
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user2_id", nullable = false)
-    private User user2; // Segundo usuario en el chat
+    @OneToMany(mappedBy = "chat")
+    private List<ChatParticipant> chatParticipants;
 
     // Constructor vacío
-    public Chat() {}
-
-    // Constructor con parámetros
-    public Chat(String message, User user1, User user2) {
-        this.message = message;
-        this.user1 = user1;
-        this.user2 = user2;
+    public Chat() {
+        this.createdAt = LocalDateTime.now(); // Se inicializa la fecha de creación
     }
 
-    // Getter y Setter
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+    // Constructor con parámetros
+    public Chat(String name) {
+        this.name = name;
+        this.createdAt = LocalDateTime.now();
+    }
 
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    // Getters y Setters
+    public UUID getId() {
+        return id;
+    }
 
-    public User getUser1() { return user1; }
-    public void setUser1(User user1) { this.user1 = user1; }
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
-    public User getUser2() { return user2; }
-    public void setUser2(User user2) { this.user2 = user2; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

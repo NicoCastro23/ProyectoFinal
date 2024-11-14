@@ -12,9 +12,6 @@ import java.util.UUID;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, UUID> {
 
-    // Encuentra todos los chats en los que participa un usuario específico
-    List<Chat> findByUser1OrUser2(User user1, User user2);
-
-    List<Chat> findByUser1_IdOrUser2_Id(UUID userId1, UUID userId2);
+    List<Chat> findByChatParticipants_User(User user);
 
 }
