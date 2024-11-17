@@ -30,6 +30,15 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         // No procesar las rutas públicas
+        if (request.getRequestURI().startsWith("/ws/")) {
+            filterChain.doFilter(request, response); // Ignorar rutas WebSocket
+            return;
+        }
+        if (request.getRequestURI().matches("/ws(.*)")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        
         String uri = request.getRequestURI();
         if (uri.startsWith("/api/auth/")) {
             filterChain.doFilter(request, response); // Continua la cadena de filtros sin hacer nada
@@ -86,4 +95,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         return new CustomAuthentication(username);
     }
+    
+
 }

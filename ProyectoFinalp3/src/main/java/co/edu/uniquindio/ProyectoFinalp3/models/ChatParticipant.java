@@ -1,9 +1,14 @@
 package co.edu.uniquindio.ProyectoFinalp3.models;
 
-import java.util.UUID;
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "chat_participants")
 public class ChatParticipant {
@@ -14,57 +19,22 @@ public class ChatParticipant {
 
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
-    private Chat chat; // Relación con el chat
+    private Chat chat;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Relación con el usuario
+    private User user;
 
-    @Column(name = "joined_at", nullable = false, updatable = false)
-    private LocalDateTime joinedAt;
+    @Column(nullable = false)
+    private boolean isAdmin; // Indica si este usuario es administrador del chat
 
-    // Constructor vacío
-    public ChatParticipant() {
-        this.joinedAt = LocalDateTime.now();
-    }
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime joinedAt = LocalDateTime.now(); // Fecha y hora de ingreso
 
-    // Constructor con parámetros
-    public ChatParticipant(Chat chat, User user) {
+    public ChatParticipant(Chat chat, User user, boolean isAdmin) {
         this.chat = chat;
         this.user = user;
-        this.joinedAt = LocalDateTime.now();
-    }
-
-    // Getters y Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getJoinedAt() {
-        return joinedAt;
-    }
-
-    public void setJoinedAt(LocalDateTime joinedAt) {
-        this.joinedAt = joinedAt;
+        this.isAdmin = isAdmin;
+        this.joinedAt = LocalDateTime.now(); // Inicializar con la fecha y hora actuales
     }
 }

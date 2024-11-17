@@ -3,7 +3,10 @@ package co.edu.uniquindio.ProyectoFinalp3.models;
 import java.util.UUID;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -23,60 +26,15 @@ public class Message {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "receiver_id", nullable = true)
+    private User receiver; // Relación con el destinatario (puede ser null para mensajes de grupo)
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // Constructor vacío
     public Message() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    // Constructor con parámetros
-    public Message(Chat chat, User user, String content) {
-        this.chat = chat;
-        this.user = user;
-        this.content = content;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // Getters y Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

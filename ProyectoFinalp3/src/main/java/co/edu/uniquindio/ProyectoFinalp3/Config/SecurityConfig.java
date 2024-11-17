@@ -27,7 +27,9 @@ public class SecurityConfig {
                 .csrf().disable() // Deshabilita CSRF si no lo necesitas
                 .cors().and()
                 .authorizeHttpRequests()
+                .requestMatchers("/api/chats/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll() // Rutas de autenticación abiertas
+                .requestMatchers("/api/chats/**").permitAll()
                 .requestMatchers("/orders/**").permitAll()
                 .requestMatchers("/contacts/**").permitAll()
                 .requestMatchers("/payments/**").permitAll()
@@ -42,9 +44,7 @@ public class SecurityConfig {
                 // son públicas
                 .anyRequest().authenticated() // Cualquier otra ruta debe ser autenticada
                 .and()
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class); // Asegura que tu filtro JWT
-                                                                                           // esté en la cadena de
-                                                                                           // filtros
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

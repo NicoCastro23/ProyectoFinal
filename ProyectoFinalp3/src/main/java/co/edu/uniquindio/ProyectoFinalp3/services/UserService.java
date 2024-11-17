@@ -1,6 +1,5 @@
 package co.edu.uniquindio.ProyectoFinalp3.services;
 
-import co.edu.uniquindio.ProyectoFinalp3.dto.UpdateUserRequest;
 import co.edu.uniquindio.ProyectoFinalp3.enums.RoleEnum;
 import co.edu.uniquindio.ProyectoFinalp3.models.User;
 import co.edu.uniquindio.ProyectoFinalp3.repository.UserRepository;
