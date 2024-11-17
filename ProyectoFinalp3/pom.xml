@@ -118,6 +118,12 @@
             <artifactId>tomcat-jdbc</artifactId>
             <version>9.0.54</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>3.3.4</version> <!-- Ajusta a la versión que uses -->
+        </dependency>
+
 
     </dependencies>
 

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ProyectoFinalp3.controllers;
 
+import co.edu.uniquindio.ProyectoFinalp3.dto.CreateProductRequestDto;
 import co.edu.uniquindio.ProyectoFinalp3.enums.ProductStatus;
 import co.edu.uniquindio.ProyectoFinalp3.models.Product;
 import co.edu.uniquindio.ProyectoFinalp3.models.ProductComment;
@@ -28,14 +29,15 @@ public class ProductController {
     private ProductCommentService productCommentService; 
 
     @PostMapping("/create")
-    public ResponseEntity<?> createProduct(@RequestBody Product product, @RequestParam String username) {
-        try {
-            Product createdProduct = productService.createProduct(product, username);
-            return ResponseEntity.ok(createdProduct);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear el producto: " + e.getMessage());
-        }
+    public ResponseEntity<?> createProduct(@RequestBody CreateProductRequestDto request) {
+    try {
+        // Extraer el producto y el userId del request
+        Product createdProduct = productService.createProduct(request.getProduct(), request.getUserId());
+        return ResponseEntity.ok(createdProduct);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear el producto: " + e.getMessage());
     }
+}
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -62,9 +64,9 @@ public class ProductController {
                                                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
     }
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<List<Product>> getProductsByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(productService.getProductsByUsername(username));
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Product>> getProductsByUserId(@PathVariable UUID userId) {
+        return ResponseEntity.ok(productService.getProductsByUserId(userId));
     }
 
     @GetMapping("/category/{category}")

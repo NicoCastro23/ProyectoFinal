@@ -20,11 +20,15 @@ public class ProductService {
 
     @Autowired
     private UserRepository userRepository;  // Asegúrate de que esta línea esté aquí
-    public Product createProduct(Product product, String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + username));
-
-        product.setUser(user);  // Asociar el usuario al producto
+    public Product createProduct(Product product, UUID userId) {
+        // Buscar el usuario por UUID
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + userId));
+    
+        // Asociar el usuario al producto
+        product.setUser(user);
+    
+        // Guardar el producto en el repositorio
         return productRepository.save(product);
     }
 
@@ -52,8 +56,9 @@ public class ProductService {
         return false;
     }
 
-    public List<Product> getProductsByUsername(String username) {
-        return productRepository.findByUser_Username(username);
+    public List<Product> getProductsByUserId(UUID userId) {
+        // Llama al nuevo método del repositorio
+        return productRepository.findByUser_Id(userId);
     }
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
