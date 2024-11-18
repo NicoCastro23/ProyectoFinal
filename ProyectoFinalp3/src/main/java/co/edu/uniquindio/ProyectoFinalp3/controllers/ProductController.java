@@ -79,20 +79,35 @@ public class ProductController {
     public ResponseEntity<List<Product>> getActiveProducts() {
         return ResponseEntity.ok(productService.getActiveProducts(ProductStatus.ACTIVE));  
     }
-    // Nueva funcionalidad: Endpoint para agregar un comentario a un producto
     @PostMapping("/{productId}/comments")
     public ResponseEntity<ProductComment> addComment(
-            @PathVariable UUID productId,
-            @RequestParam UUID userId,
-            @RequestParam String commentText) {
+        @PathVariable UUID productId,
+        @RequestBody Map<String, String> requestBody) {
 
-        try {
-            ProductComment comment = productCommentService.addCommentToProduct(productId, userId, commentText);
-            return ResponseEntity.ok(comment);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    // Extraer y validar los datos del cuerpo
+    String userIdStr = requestBody.get("userId");
+    String commentText = requestBody.get("commentText");
+
+    if (userIdStr == null || commentText == null || commentText.isBlank()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+
+    UUID userId;
+    try {
+        userId = UUID.fromString(userIdStr);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    try {
+        // Llamar al servicio para agregar el comentario
+        ProductComment comment = productCommentService.addCommentToProduct(productId, userId, commentText);
+        return ResponseEntity.ok(comment);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+}
+
 
     // Nueva funcionalidad: Endpoint para obtener comentarios de un producto
     @GetMapping("/{productId}/comments")
