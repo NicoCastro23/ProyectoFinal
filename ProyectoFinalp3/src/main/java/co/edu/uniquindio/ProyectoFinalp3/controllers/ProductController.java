@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -100,12 +101,23 @@ public class ProductController {
         return ResponseEntity.ok(comments);
     }
 
-    //Endpoint para agregar un "like" a un producto
     @PostMapping("/{productId}/likes")
     public ResponseEntity<String> addLike(
             @PathVariable UUID productId,
-            @RequestParam UUID userId) {
-
+            @RequestBody Map<String, String> requestBody) {
+    
+        String userIdStr = requestBody.get("userId");
+        if (userIdStr == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El userId es requerido.");
+        }
+    
+        UUID userId;
+        try {
+            userId = UUID.fromString(userIdStr);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El userId no tiene un formato válido.");
+        }
+    
         boolean liked = productLikeService.addLikeToProduct(productId, userId);
         if (liked) {
             return ResponseEntity.ok("Like agregado exitosamente.");
@@ -113,6 +125,8 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El usuario ya ha dado like a este producto.");
         }
     }
+    
+
 
     // Endpoint para obtener la cantidad de "likes" de un producto
     @GetMapping("/{productId}/likes/count")
