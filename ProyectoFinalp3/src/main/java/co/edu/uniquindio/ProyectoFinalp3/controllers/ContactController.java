@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/contacts")
+@RequestMapping("/api/contacts")
 public class ContactController {
 
     @Autowired
