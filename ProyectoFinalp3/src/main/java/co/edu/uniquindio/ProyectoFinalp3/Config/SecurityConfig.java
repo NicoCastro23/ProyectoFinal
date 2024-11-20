@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/chats/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll() // Rutas de autenticación abiertas
                 .requestMatchers("/api/chats/**").permitAll()
-                .requestMatchers("/orders/**").permitAll()
+                .requestMatchers("/api/orders/**").permitAll()
                 .requestMatchers("/contacts/**").permitAll()
                 .requestMatchers("/payments/**").permitAll()
                 .requestMatchers("/api/products/**").permitAll()
